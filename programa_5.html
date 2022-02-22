@@ -1,0 +1,70 @@
+<canvas width="600" height="400">  </canvas>
+
+<script >    
+    var pantalla = document.querySelector("canvas");
+    var pincel = pantalla.getContext("2d");            
+    pincel.fillStyle = "Lightgrey";  
+    pincel.fillRect(0,0,600,400);     
+
+    var radio = 10;
+    
+    function disenharCircuferencia(x,y,radio,color){
+        pincel.fillStyle = color;
+        pincel.beginPath();
+        pincel.arc(x,y,radio,0,2*Math.PI);
+        pincel.fill();
+    }
+    
+    function limpiarPantalla() {
+
+        pincel.clearRect(0,0,600,400);
+
+    }
+
+    var x = 0
+    var xAleatorio;
+    var yaleatorio;
+
+    function disenharObejtivo (x,y) {
+
+        disenharCircuferencia(x,y,radio + 20,"red");
+        disenharCircuferencia(x,y,radio + 10,"white");
+        disenharCircuferencia(x,y,radio,"red");
+    }
+
+    
+    function sortearPosicion(maxímo) {
+
+        return Math.floor(Math.random()*maxímo);
+    
+    }
+
+    
+    function actualizarPantalla() {
+
+        limpiarPantalla();
+        xAleatorio = sortearPosicion(600);
+        yaleatorio = sortearPosicion(400)
+        disenharObejtivo(xAleatorio,yaleatorio); 
+        x++;        
+    }
+    
+    setInterval(actualizarPantalla,1000);
+
+    function disparar(evento){
+
+        var x = evento.pageX - pantalla.OffsetLeft;
+        var y = evento.pageY - page.OffsetTop;
+
+        
+        if ((x < xAleatorio + radio) && 
+            (x > xAleatorio - radio) &&
+            (y < yaleatorio + radio) &&
+            (y > yaleatorio - radio) ) {
+            alert("Tiro Certero");
+        }          
+    }
+
+    pantalla.onclick = disparar;
+    
+</script>
